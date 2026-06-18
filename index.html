@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RAKN</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -130,40 +129,26 @@
   </div>
 
   <script>
-    var SUPABASE_URL = 'https://bvolqcriwwdkdekkndrt.supabase.co';
-    var SUPABASE_KEY = 'sb_publishable_t54wisgOB_qmmG7eL0yI2A_n8PXe80O';
-    var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+    // Auth detection — runs immediately, no dependencies
     var fullUrl = window.location.href;
     var hash = window.location.hash.substring(1);
-    var params = new URLSearchParams(hash);
     var query = new URLSearchParams(window.location.search);
 
-    // Detect auth type from hash, query, or raw URL string
-    var type = params.get('type') || query.get('type');
-    if (!type && fullUrl.indexOf('type=recovery') !== -1) type = 'recovery';
-    if (!type && fullUrl.indexOf('type=signup') !== -1) type = 'signup';
-    if (!type && (fullUrl.indexOf('access_token=') !== -1 || query.get('code'))) type = 'signup';
+    var type = null;
+    if (fullUrl.indexOf('type=recovery') !== -1) type = 'recovery';
+    else if (fullUrl.indexOf('type=signup') !== -1) type = 'signup';
+    else if (fullUrl.indexOf('access_token=') !== -1) type = 'signup';
+    else if (query.get('code')) type = 'signup';
 
     if (type === 'recovery') {
-      // Password reset — show form
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('recovery').classList.remove('hidden');
 
-      // Set session from tokens in URL hash
-      var accessToken = params.get('access_token');
-      var refreshToken = params.get('refresh_token');
-      if (accessToken && refreshToken) {
-        supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
-      }
-
-      // On mobile, also try opening the app
       if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
         window.location.href = 'rakn://reset-confirm' + window.location.hash;
       }
 
     } else if (type) {
-      // Email confirmation
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
 
@@ -173,6 +158,26 @@
       if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
         window.location.href = openBtn.href;
       }
+    }
+  </script>
+
+  <!-- Supabase SDK — only needed for password reset form, loaded after page renders -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    var _supaClient = null;
+    function getSupabase() {
+      if (!_supaClient && window.supabase) {
+        _supaClient = window.supabase.createClient(
+          'https://bvolqcriwwdkdekkndrt.supabase.co',
+          'sb_publishable_t54wisgOB_qmmG7eL0yI2A_n8PXe80O'
+        );
+        // Set session from URL tokens for password reset
+        var params = new URLSearchParams(window.location.hash.substring(1));
+        var at = params.get('access_token');
+        var rt = params.get('refresh_token');
+        if (at && rt) _supaClient.auth.setSession({ access_token: at, refresh_token: rt });
+      }
+      return _supaClient;
     }
 
     async function handleReset() {
@@ -194,10 +199,17 @@
         return;
       }
 
+      var client = getSupabase();
+      if (!client) {
+        errEl.textContent = 'Unable to connect. Please try again.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = 'Updating...';
 
-      var result = await supabase.auth.updateUser({ password: pw1 });
+      var result = await client.auth.updateUser({ password: pw1 });
 
       if (result.error) {
         errEl.textContent = result.error.message;
@@ -210,7 +222,6 @@
       }
     }
 
-    // Allow Enter key to submit
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !document.getElementById('recovery').classList.contains('hidden')) {
         handleReset();
