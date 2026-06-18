@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RAKN</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1A1916;
+      color: #CFC7B8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      text-align: center;
+      max-width: 400px;
+    }
+    .brand {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 6px;
+      margin-bottom: 8px;
+    }
+    .runes {
+      font-size: 18px;
+      color: #4A4842;
+      letter-spacing: 4px;
+      margin-bottom: 40px;
+    }
+    .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #4A4842;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .btn {
+      display: inline-block;
+      background: #B5531F;
+      color: #CFC7B8;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      letter-spacing: 0.3px;
+    }
+    .btn:hover { opacity: 0.9; }
+    .subtle {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #4A4842;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">RAKN</div>
+    <div class="runes">ᚱᛅᚴᚾ</div>
+    <div id="content">
+      <div class="icon">✓</div>
+      <h1 id="title">Email confirmed</h1>
+      <p id="message">Your email has been verified. You can now open the app and log in.</p>
+      <a class="btn" id="open-app" href="rakn://">Open RAKN App</a>
+      <p class="subtle" id="subtle">On a computer? Just open the RAKN app on your phone.</p>
+    </div>
+  </div>
+  <script>
+    // Parse the hash to detect the auth action type
+    var hash = window.location.hash.substring(1);
+    var params = new URLSearchParams(hash);
+    var type = params.get('type');
+
+    // Also check query params (Supabase sometimes uses these)
+    var query = new URLSearchParams(window.location.search);
+    if (!type) type = query.get('type');
+
+    var title = document.getElementById('title');
+    var message = document.getElementById('message');
+    var openBtn = document.getElementById('open-app');
+    var subtle = document.getElementById('subtle');
+
+    if (type === 'recovery') {
+      title.textContent = 'Reset your password';
+      message.textContent = 'Open the RAKN app on your phone to set a new password.';
+      openBtn.href = 'rakn://reset-confirm' + window.location.hash;
+      openBtn.textContent = 'Open RAKN App';
+      subtle.textContent = 'This link only works on a device with the RAKN app installed.';
+    } else {
+      // For signup confirmation, try to auto-open the app
+      openBtn.href = 'rakn://' + window.location.hash;
+    }
+
+    // Try to auto-open the app on mobile
+    if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
+      window.location.href = openBtn.href;
+    }
+  </script>
+</body>
+</html>
