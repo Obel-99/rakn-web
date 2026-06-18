@@ -20,17 +20,22 @@
       text-align: center;
       max-width: 400px;
     }
+    .logos {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
     .logo-name {
-      width: 260px;
-      height: auto;
+      width: 280px;
+      margin-bottom: -50px;
       filter: brightness(0) invert(0.85) sepia(0.1) saturate(0.3);
-      margin-bottom: -60px;
     }
     .logo-runes {
-      width: 200px;
-      height: auto;
+      width: 180px;
+      margin-top: -30px;
       filter: brightness(0) invert(0.85) sepia(0.1) saturate(0.3);
-      margin-bottom: 16px;
     }
     .tagline {
       font-size: 13px;
@@ -76,8 +81,10 @@
 </head>
 <body>
   <div class="card">
-    <img src="Name.png" alt="RAKN" class="logo-name" />
-    <img src="Logo1.png" alt="ᚱᛅᚴᚾ" class="logo-runes" />
+    <div class="logos">
+      <img src="Name.png" alt="RAKN" class="logo-name" />
+      <img src="Logo1.png" alt="ᚱᛅᚴᚾ" class="logo-runes" />
+    </div>
 
     <!-- Default: landing page -->
     <div id="landing">
