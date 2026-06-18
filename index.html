@@ -64,7 +64,6 @@
     }
     .btn:hover { opacity: 0.9; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .subtle { margin-top: 16px; font-size: 13px; color: #8A8578; }
     .hidden { display: none; }
     .input {
       width: 100%;
@@ -103,9 +102,7 @@
     <div id="auth" class="hidden">
       <div class="icon">✓</div>
       <h1 id="title">Email confirmed</h1>
-      <p id="message">Your email has been verified. You can now open the app and log in.</p>
-      <a class="btn" id="open-app" href="rakn://">Open RAKN App</a>
-      <p class="subtle" id="subtle">On a computer? Just open the RAKN app on your phone.</p>
+      <p id="message">Your email has been verified. You're all set.</p>
     </div>
 
     <!-- Password reset form -->
@@ -123,8 +120,6 @@
       <div class="icon">✓</div>
       <h1>Password updated</h1>
       <p>Your password has been changed. You can now log in with your new password.</p>
-      <a class="btn" href="rakn://">Open RAKN App</a>
-      <p class="subtle">On a computer? Just open the RAKN app on your phone.</p>
     </div>
   </div>
 
@@ -152,11 +147,8 @@
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
 
-      var openBtn = document.getElementById('open-app');
-      openBtn.href = 'rakn://' + window.location.hash;
-
       if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
-        window.location.href = openBtn.href;
+        window.location.href = 'rakn://' + window.location.hash;
       }
     }
   </script>
