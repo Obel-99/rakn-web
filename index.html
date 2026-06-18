@@ -141,6 +141,10 @@
     var query = new URLSearchParams(window.location.search);
     if (!type) type = query.get('type');
 
+    // If there's an access_token but no type, it's a signup confirmation
+    var accessToken = params.get('access_token') || query.get('access_token');
+    if (!type && accessToken) type = 'signup';
+
     if (type === 'recovery') {
       // Password reset — show form
       document.getElementById('landing').classList.add('hidden');
