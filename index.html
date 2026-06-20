@@ -108,7 +108,7 @@
     <!-- Password reset form -->
     <div id="recovery" class="hidden form">
       <h1>Set new password</h1>
-      <p>Enter your new password below.</p>
+      <p>Must be at least 6 characters.</p>
       <div id="reset-error" class="error hidden"></div>
       <input id="pw1" class="input" type="password" placeholder="New password" autocomplete="new-password" />
       <input id="pw2" class="input" type="password" placeholder="Confirm password" autocomplete="new-password" />
@@ -119,7 +119,7 @@
     <div id="reset-success" class="hidden">
       <div class="icon">✓</div>
       <h1>Password updated</h1>
-      <p>Your password has been changed. You can now log in with your new password.</p>
+      <p>Your password has been changed. Go back to the app and log in with your new password.</p>
     </div>
   </div>
 
@@ -138,10 +138,6 @@
     if (type === 'recovery') {
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('recovery').classList.remove('hidden');
-
-      if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
-        window.location.href = 'rakn://reset-confirm' + window.location.hash;
-      }
 
     } else if (type) {
       document.getElementById('landing').classList.add('hidden');
