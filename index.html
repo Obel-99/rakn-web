@@ -102,7 +102,7 @@
     <div id="auth" class="hidden">
       <div class="icon">✓</div>
       <h1 id="title">Email confirmed</h1>
-      <p id="message">Your email has been verified. You're all set.</p>
+      <p id="message">Your email has been verified. Go back to the app and log in.</p>
     </div>
 
     <!-- Password reset form -->
@@ -140,10 +140,6 @@
     } else if (type) {
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
-
-      if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
-        window.location.href = 'rakn://' + window.location.hash;
-      }
     }
   </script>
 
