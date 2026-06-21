@@ -83,6 +83,18 @@
     .form { text-align: left; }
     .form h1 { text-align: center; }
     .form p { text-align: center; }
+    .show-pw-btn {
+      background: none;
+      border: none;
+      color: #4A4842;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 2px 0;
+      margin-bottom: 12px;
+      float: right;
+    }
+    .show-pw-btn:hover { color: #CFC7B8; }
   </style>
 </head>
 <body>
@@ -109,8 +121,9 @@
     <div id="recovery" class="hidden form">
       <h1>Set new password</h1>
       <div id="reset-error" class="error hidden"></div>
-      <input id="pw1" class="input" type="password" placeholder="New password" autocomplete="new-password" />
-      <input id="pw2" class="input" type="password" placeholder="Confirm password" autocomplete="new-password" />
+      <input id="pw1" class="input" type="password" placeholder="New password" autocomplete="new-password" oninput="updateShowBtn()" />
+      <input id="pw2" class="input" type="password" placeholder="Confirm password" autocomplete="new-password" oninput="updateShowBtn()" />
+      <button id="show-pw" class="show-pw-btn hidden" onclick="togglePasswords()">Show passwords</button>
       <button class="btn" id="reset-btn" onclick="handleReset()">Update Password</button>
     </div>
 
@@ -202,6 +215,24 @@
         document.getElementById('recovery').classList.add('hidden');
         document.getElementById('reset-success').classList.remove('hidden');
       }
+    }
+
+    function updateShowBtn() {
+      var pw1 = document.getElementById('pw1').value;
+      var pw2 = document.getElementById('pw2').value;
+      var btn = document.getElementById('show-pw');
+      if (pw1.length > 0 || pw2.length > 0) btn.classList.remove('hidden');
+      else btn.classList.add('hidden');
+    }
+
+    function togglePasswords() {
+      var pw1 = document.getElementById('pw1');
+      var pw2 = document.getElementById('pw2');
+      var btn = document.getElementById('show-pw');
+      var showing = pw1.type === 'text';
+      pw1.type = showing ? 'password' : 'text';
+      pw2.type = showing ? 'password' : 'text';
+      btn.textContent = showing ? 'Show passwords' : 'Hide passwords';
     }
 
     document.addEventListener('keydown', function(e) {
