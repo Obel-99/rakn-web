@@ -53,7 +53,7 @@
 
     <div class="summary">
       <p><strong>The short version.</strong> RAKN stores your account and your training data so the app works and your data follows you between devices. That's it.</p>
-      <p>No ads. No analytics. No tracking. We don't sell or share your data. Delete your account in the app and your data is gone.</p>
+      <p>No ads. No analytics. No tracking. We don't sell your data or use it for advertising. Delete your account in the app and your data is gone.</p>
     </div>
 
     <h2>Who we are</h2>
@@ -63,7 +63,7 @@
     <p><strong>Your account</strong></p>
     <ul>
       <li>Your email address.</li>
-      <li>Your password, if you sign up with email. It is stored only in hashed form. We can never see it.</li>
+      <li>Your password, if you sign up with email. Passwords are securely processed by our authentication provider and are not accessible to RAKN.</li>
       <li><strong>If you use Sign in with Apple:</strong> a unique user ID from Apple and the email address Apple shares with us. If you choose "Hide My Email", this is a private relay address, not your real email. We don't ask for or store your name.</li>
     </ul>
     <p><strong>Your training data</strong>, meaning what you choose to enter:</p>
@@ -73,7 +73,7 @@
       <li>Planned sessions in your calendar.</li>
       <li>Body weight entries, if you choose to log them.</li>
     </ul>
-    <p>Body weight and training history can say something about your health. We only store it because you enter it, and only use it to show it back to you.</p>
+    <p>Body weight is health data. Logging it is optional, and the app asks for your explicit consent before your first entry. We only use it to show you your own progress.</p>
 
     <p><strong>Stored only on your phone</strong>, never sent to us: your app settings (theme, sound and vibration), custom exercises, your weekly template, and a temporary copy of an active workout so you can recover it if the app closes.</p>
 
@@ -87,15 +87,16 @@
     <p>Rest timer alerts are local notifications created on your phone. No push service is involved.</p>
 
     <h2>Why we use it</h2>
-    <p>Only to run the app for you: to log you in, save your training, and sync it between your devices. The legal basis is our agreement with you when you create an account (GDPR Art. 6(1)(b)). For body weight and other health-related entries, your explicit consent, which you give by choosing to enter them and can withdraw by deleting them (Art. 9(2)(a)).</p>
-    <p>We don't use your data for marketing, profiling or automated decisions, and we don't sell or share it with anyone.</p>
+    <p>Only to run the app for you: to log you in, save your training, and sync it between your devices. The legal basis is our agreement with you when you create an account (GDPR Art. 6(1)(b)).</p>
+    <p>For body weight, which is health data, the legal basis is your explicit consent (Art. 6(1)(a) and Art. 9(2)(a)). The app asks for it in a separate prompt before your first entry. You can withdraw it at any time in Settings under Privacy. This permanently deletes all your body weight entries, on your phone and on our servers. Withdrawing doesn't affect processing that happened before.</p>
+    <p>We don't sell your data or use it for advertising, marketing, profiling or automated decisions. The only company that processes it on our behalf is our data processor, Supabase (see below).</p>
 
     <h2>Where it's stored</h2>
-    <p>Your data is stored on your phone and synced to our database, hosted by <a href="https://supabase.com/privacy">Supabase</a> on servers in the EU (Ireland). Supabase also handles sign-in. Supabase processes the data only on our behalf, under a data processing agreement. In the rare case that Supabase support staff outside the EU/EEA need access, that is protected by the EU Standard Contractual Clauses.</p>
+    <p>Your data is stored on your phone and synced to our database, hosted on servers in the EU (Ireland). We use <a href="https://supabase.com/privacy">Supabase</a> as a data processor to provide authentication, database hosting and synchronization. Supabase processes the data only on our behalf, under a data processing agreement. In the rare case that Supabase support staff outside the EU/EEA need access, that is protected by the EU Standard Contractual Clauses.</p>
     <p>Data is sent over encrypted connections, and each account can only access its own data.</p>
 
     <h2>How long we keep it</h2>
-    <p>For as long as you have an account. You can delete individual workouts, sessions and entries at any time.</p>
+    <p>For as long as you have an account. You can delete individual workouts, sessions and entries at any time. They disappear from the app on all your devices right away. On our servers they are kept, marked as deleted, so your devices stay in sync, and are permanently erased when you delete your account.</p>
     <p><strong>Deleting your account:</strong> in the app, go to Settings and choose Delete Account. This permanently deletes your account and all training data linked to it from our servers. Data stored only on your phone is removed when you delete the app.</p>
 
     <h2>Your rights</h2>
